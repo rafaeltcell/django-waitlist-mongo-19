@@ -1,0 +1,49 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}pinax-project-account{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+    <section class="jumbotron">
+        <div class="container">
+            {% include "_messages.html" %}
+            {% if not user.is_authenticated %}
+            {% url "account_login" as login_url %}
+            {% url "account_signup" as signup_url %}
+            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
+            {% endif %}
+        </div>
+    </section>
+    <section>
+        <div class="container">
+          <h1>django_waitlist</h1>
+
+          <h3>Docker Images</h3>
+          <ul>
+            <li>web</li>
+            <li>tcell_web</li>
+          </ul>
+
+          <h3>Setup</h3>
+
+          <ul>
+            <li>1. docker-compose build</li>
+            <li>2. sh docker/initial_setup.sh # needs `psql`. creates db and seeds it.</li>
+            <li>3. docker-compose up web or docker-compose up tcell_web</li>
+          </ul>
+
+          <h3>Vulnerabilities</h3>
+
+          <ul>
+            <li>`http://host:port/vulnerabilities/search`</li>
+            <li>Input from search form is executed raw in the db thereby creating a security hole</li>
+            <li>&nbsp;</li>
+            <li>`http://host:port/vulnerabilities/sql_exception/`</li>
+            <li>Raw sql is malformed so it will raise an sql exception</li>
+          </ul>
+        </div>
+    </section>
+{% endblock %}
